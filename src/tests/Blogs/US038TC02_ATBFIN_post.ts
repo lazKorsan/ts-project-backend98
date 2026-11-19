@@ -4,17 +4,16 @@ import assert from "node:assert/strict";
 /*
  Desciption:Bir yönetici olarak API bağlantısı üzerinden yeni bir blog kaydı olusturabilmek istiyorum
  Acceptance Criterias:
-/api/addBlog endpoint'ine gecerli authorization bilgileri ve
-dogru datalar (title, category_id, description, content) iceren bir
-POST body gönderildiginde dönen
-status code'in 200,
-response body'deki remark bilgisinin "success" ve
-Message bilgisinin de "Successfully Added." oldugu dogrulanmali.
+/api/addBlog endpoint'ine
+gecerli authorization bilgileri ve
+data icermeyen bir POST request gönderildiginde
+dönen status code'in 422 oldugu ve
+response body'deki message bilgisinin "The title field is required. (and 3 more errors)" oldugu dogrulanmali
  */
 
 
-async function runUS038TC01() {
-    console.dir('Pozitive->GET [ADMIN=TRUE],[ID=NONE]', {depth: null, colors: true});
+async function runUS038TC02() {
+    console.dir('Negative->POST [ADMIN=TRUE],[BODY=EMPTY][ID=NONE]', {depth: null, colors: true});
     // 1. Token al
     const tokenResponse = await axios.request({
         method: 'post',
@@ -33,35 +32,41 @@ async function runUS038TC01() {
     console.log('Token:', token);
 
 
-    const postResponse = await axios.request({
-        method: 'post',
-        url: 'https://qa.instulearn.com/api/addBlog',
-        headers: {
-            'Accept': 'application/json',
-            'x-api-key': '1234',
-            'Authorization': `Bearer ${token}`
-        },
-        data: {
-            title: 'Test Blogs API melingojgej',
-            category_id: 132,
-            description: 'Online Education Melingojgej',
-            content: 'video and downloadeble files Melingojgej'
+    // todo negative testlerde try-catch blogu zorunlu
+    try {
+        const postResponse = await axios.request({
+            method: 'post',
+            url: 'https://qa.instulearn.com/api/addBlog',
+            headers: {
+                'Accept': 'application/json',
+                'x-api-key': '1234',
+                'Authorization': `Bearer ${token}`
+            },
+            // data kısmını bos birakiyoruz.
+        })
+
+        console.dir(postResponse.data);
+
+    } catch (error) {
+
+        if (!axios.isAxiosError(error)) {
+            throw error; // Axios hatası değilse yeniden fırlatın
         }
-    })
 
-    console.dir(postResponse.data);
+        const status = error.response?.status;
+        const message = error.response?.data?.message;
 
-    console.log('Eklenen Blog ID:', postResponse.data["Added Blog ID"]);
-    console.dir(postResponse.data["Added Blog ID"]);
+        console.log('Status :', status);
+        console.log('Message:', message);
 
-    // 3. Assertions
-    assert.equal(postResponse.status, 200);
-    assert.equal(postResponse.data.remark, 'success');
-    assert.equal(postResponse.data.Message, 'Successfully Added.');
+        assert.strictEqual(status, 422, "Status code 401 değil!");
+        console.log('   ✅ Status Code 401 doğrulandı.');
 
-    console.dir('✅ Tüm testler geçti ');
+        assert.strictEqual(message, 'The title field is required. (and 3 more errors)', "message: 'The title field is required. (and 3 more errors)' değil!");
+        console.log('   ✅ message "Unauthenticated." doğrulandı.');
+    }
 
 
 }
 
-runUS038TC01().catch(console.error);
+runUS038TC02().catch(console.error);

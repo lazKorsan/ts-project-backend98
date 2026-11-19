@@ -1,7 +1,7 @@
 const axios = require('axios');
 import assert from "node:assert/strict";
 
-async function runPS036TC01() {
+async function runDataParcingBlogs() {
     // 1. Token al
     const tokenResponse = await axios.request({
         method: 'post',
@@ -38,33 +38,24 @@ async function runPS036TC01() {
     console.dir('   ✅ Remark "success" doğrulandı.');
 
     // id numaralarini listelemek
-    const blogs = getResponse.data.data.blog|| [];
+    const blogs = getResponse.data.data.blog || [];
 
     // id numarlaroını listelemek
     blogs.forEach((plan: any, index: number) => {
-        console.dir(`  [${index}] id: ${plan.id}`,{depth: null, colors: true});
+        console.dir(`  [${index}] id: ${plan.id}`, {depth: null, colors: true});
     });
 
-    // minID almak
-    const idList= blogs.map((blog: any) => Number(blog.id))
-    .filter((id: number) => !isNaN(id));
+    // maxID ve minId almak
+    const idList = blogs.map((blog: any) => Number(blog.id))
+        .filter((id: number) => !isNaN(id));
     if (idList.length > 0) {
-        const minID=Math.max(...idList);
-        const maxID=Math.max(...idList);
+        const minID = Math.max(...idList);
+        const maxID = Math.max(...idList);
         console.dir(`✅  Max ID: "${maxID}"`, {depth: null, colors: true});
         console.dir(`✅ MinID:  "${minID}"`, {depth: null, colors: true});
     }
 
 
-
-
-
-
-
-
-
-
-
 }
 
-runPS036TC01().catch(console.error);
+runDataParcingBlogs().catch(console.error);

@@ -3,7 +3,7 @@ import * as fs from "fs";
 import * as path from "path";
 
 // Varsayılan tag. İsterseniz dosyayı değiştirmeden de verebilirsiniz:
-//   npx ts-node fromScript.ts @US011TC01_ATIN_get
+//   npx ts-node TestRunner.ts @US011TC01_ATIN_get
 const DEFAULT_TAG = "@US011TC01_ATIN_get";
 const TAG = process.argv[2] ?? DEFAULT_TAG;
 
