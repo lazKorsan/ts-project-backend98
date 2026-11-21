@@ -13,7 +13,7 @@ Message bilgisinin de "Successfully Deleted." oldugu dogrulanmali.
  */
 
 
-async function runXyzt() {
+async function US040TC01() {
     console.dir('TestinKisaTanimi',);
     // 1. Token al
     const tokenResponse = await axios.request({
@@ -77,7 +77,6 @@ async function runXyzt() {
     assert.strictEqual(deleteResponse.data.Message, 'Successfully Deleted.');
 
 
-
     console.log(`Silinen Blog ID numarasi : ${deleteResponse.data["Deleted Blog Id"]}`);
 
     const deletedBlogID = deleteResponse.data["Deleted Blog Id"];
@@ -91,10 +90,6 @@ async function runXyzt() {
     console.log('✅ Tüm DELETE testleri geçti');
 
 
-
-
-
-
 }
 
-runXyzt().catch(console.error);
+US040TC01().catch(console.error);

@@ -9,7 +9,7 @@ import assert from "node:assert/strict";
  */
 
 
-async function run039tc05() {
+async function run039TC05() {
     console.dir('TestinKisaTanimi',);
     // 1. Token al
     const tokenResponse = await axios.request({
@@ -98,4 +98,4 @@ async function run039tc05() {
 
 }
 
-run039tc05().catch(console.error);
+run039TC05().catch(console.error);

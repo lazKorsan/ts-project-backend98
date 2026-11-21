@@ -1,7 +1,7 @@
 const axios = require('axios');
 import assert from "node:assert/strict";
 
-async function runDataParcingBlogs() {
+async function DataParcingBlogs() {
     // 1. Token al
     const tokenResponse = await axios.request({
         method: 'post',
@@ -49,7 +49,7 @@ async function runDataParcingBlogs() {
     const idList = blogs.map((blog: any) => Number(blog.id))
         .filter((id: number) => !isNaN(id));
     if (idList.length > 0) {
-        const minID = Math.max(...idList);
+        const minID = Math.min(...idList);
         const maxID = Math.max(...idList);
         console.dir(`✅  Max ID: "${maxID}"`, {depth: null, colors: true});
         console.dir(`✅ MinID:  "${minID}"`, {depth: null, colors: true});
@@ -58,4 +58,4 @@ async function runDataParcingBlogs() {
 
 }
 
-runDataParcingBlogs().catch(console.error);
+DataParcingBlogs().catch(console.error);
