@@ -2,15 +2,27 @@
 import axios from 'axios';
 import 'dotenv/config';
 import assert from "node:assert/strict";
-import { TestRunner } from "../../NativeUtils/TestRunner";
-import { NativeAuthentication } from "../../NativeUtils/NativeAuthentication";
+import {APIMethods} from "../Blogs/US001AdminToken";
+
 
 async function runUS011DataParsing() {
-    await TestRunner.run('US011 - GET Price Plans (Native ID Parse)', async () => {
 
-        // 1. ADIM: Token Al
-        const token = await NativeAuthentication.getAdminToken();
-        console.log('Alınan Token:', token);
+    const tokenResponse = await axios.request({
+        method: 'post',
+        url: 'https://qa.instulearn.com/api/token',
+        headers: {
+            'Accept': 'application/json',
+            'x-api-key': '1234'
+        },
+        data: {
+            email: 'ahmet.admin@instulearn.com',
+            password: 'Learn.123'
+        }
+    });
+
+    const token = tokenResponse.data.data.access_token;
+    console.log('Token:', token);
+
 
         // 2. ADIM: GET İsteğini At
         const response = await axios.get('https://qa.instulearn.com/api/pricePlans', {
@@ -55,7 +67,7 @@ async function runUS011DataParsing() {
         } else {
             console.log("⚠️ ID listesi boş, max/min ID hesaplanamadı.");
         }
-    });
+
 }
 
 runUS011DataParsing();

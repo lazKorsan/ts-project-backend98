@@ -1,6 +1,6 @@
 import axios from 'axios';
 import assert from "node:assert/strict";
-import {Config} from "../../../config";
+import {Config} from "../../../Config";
 
 /*
  Desciption:Bir yönetici olarak API bağlantısı üzerinden yeni bir blog kaydı olusturabilmek istiyorum

@@ -11,6 +11,8 @@ export const Config = {
     apiKey: process.env.API_KEY || '1234',
     adminEmail: process.env.EMAIL || 'ahmet.admin@instulearn.com',
     adminPassword: process.env.PASSWORD || 'Learn.123',
+    accept:'application/json',
+
 };
 
 // Debug için (opsiyonel)
