@@ -2,20 +2,21 @@ import axios from 'axios';
 import 'dotenv/config';
 
 import assert from 'assert';
-import {NativeAuthentication} from "../../NativeUtils/NativeAuthentication";
+import {Template} from "../../../Template";
+
 
 async function runUS011TC01() {
     try {
         // 1. ADIM: NativeAuthentication sınıfından taze token al
-        const token = await NativeAuthentication.getAdminToken();
-        console.log('Alınan Token:', token);
+
+
 
         // 2. ADIM: Aldığın token ile GET isteğini at
         const response = await axios.get('https://qa.instulearn.com/api/pricePlans', {
             headers: {
                 'Accept': 'application/json',
                 'x-api-key': '1234',
-                'Authorization': `Bearer ${token}`,
+                'Authorization': Template.token,
             },
         });
 
