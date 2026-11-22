@@ -1,0 +1,28 @@
+### Get Price Plan by ID
+
+GET {{baseUrl}}/api/pricePlan/1583
+x-api-key: {{apiKey}}
+Accept: application/json
+Authorization: {{token}}
+
+> {%
+    client.test("Status 200 kontrolü", function() {
+        client.assert(response.body.status === 200, "Status 200 değil");
+    });
+
+    client.test("Status code 200", function() {
+        client.assert(response.body.status === 200, "Status 200 değil");
+    });
+
+    client.test("Remark success", function() {
+        client.assert(response.body.remark === "success", "Remark 'success' değil");
+    });
+
+    client.test("Data boş değil", function() {
+        client.assert(response.body.data !== null, "Data null");
+    });
+
+    client.test("HTTP status 200", function() {
+        client.assert(response.status === 200, "HTTP status 200 değil");
+    });
+%}

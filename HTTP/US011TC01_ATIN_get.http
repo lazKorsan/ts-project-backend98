@@ -1,0 +1,11 @@
+### Get Price Plan by ID
+GET https://qa.instulearn.com/api/pricePlan/1583
+x-api-key: 1234
+Accept: application/json
+Authorization: Bearer 34510|yDrNx0Ld71BJAz7BEPQjYQ7R8TAGDY0IzpsX61CU
+
+> {%
+    client.test("Status 200 kontrolü", function() {
+        client.assert(response.body.status === 200, "Status 200 değil");
+    });
+%}
