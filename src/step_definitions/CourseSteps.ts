@@ -52,8 +52,14 @@ Given(/^Courses kullanicisi "([^"]*)" sorgusu gonderir$/, async function (httpMe
     });
     console.log(this.response.data);
 });
-Given(/^Courses kullanicisi "([^"]*)" bilgisinin "([^"]*)" oldugunu dogrular$/, async function (actualValue: string, expectedValue: string) {
-    assert.strictEqual(this.response.data[actualValue], 'success', 'Beklenen degerler esit degil');
+Given(/^Courses kullanicisi "([^"]*)" bilgisinin "([^"]*)" oldugunu dogrular$/, async function (path: string, expectedValue: string) {
+    const actualValue = path.split('.').reduce((obj, key) => obj?.[key], this.response.data);
+
+    assert.strictEqual(
+        String(actualValue),
+        expectedValue,
+        `Beklenen degerler esit degil! Alan: ${path}, Beklenen: ${expectedValue}, Gelen: ${actualValue}`
+    );
 });
 Given(/^Courses kullanicisi "([^"]*)" degerinin (\d+) oldugunu dogrular$/, async function (actualValue: string, expectedValue: number) {
     assert.strictEqual(this.response.data[actualValue], 200, 'Beklenen degerler esit degil');
@@ -102,4 +108,13 @@ Given(/^Course kullanicisi asagidaki bilgilerle "(POST|PATCH|PUT)" sorgusu gonde
     });
     console.log(`[${httpMethod}] Request Body:`, requestBody);
     console.log(`[${httpMethod}] Response:`, this.response.data);
+});
+Given(/^Yetkisiz Course kullanicisi statusCode degerinin (\d+) oldugunu dogrular$/, async function (code:number) {
+
+    assert.strictEqual(this.response.status, code);
+
+});
+Given(/^Yetkisiz Course kullanicisi "([^"]*)" bilgisinin "([^"]*)" oldugunu dogrular$/, async function (actualValue: string, expectedValue: string) {
+
+    assert.strictEqual(this.response.data[actualValue], expectedValue);
 });
