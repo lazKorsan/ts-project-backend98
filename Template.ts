@@ -6,6 +6,7 @@ export const Template = {
     accept:'application/json',
     token:'Bearer 34510|yDrNx0Ld71BJAz7BEPQjYQ7R8TAGDY0IzpsX61CU',
     invalid: 'invalid',
+    admin:'Bearer 34510|yDrNx0Ld71BJAz7BEPQjYQ7R8TAGDY0IzpsX61CU',
 
 };
 
